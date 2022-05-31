@@ -19,3 +19,13 @@ C:\Users\ForseFire\Desktop\SatelliteTerminal\obj\Debug\SatelliteTerminal.csproj.
 C:\Users\ForseFire\Desktop\SatelliteTerminal\obj\Debug\SatelliteTerminal.csproj.CoreCompileInputs.cache
 C:\Users\ForseFire\Desktop\SatelliteTerminal\obj\Debug\SatelliteTerminal.exe
 C:\Users\ForseFire\Desktop\SatelliteTerminal\obj\Debug\SatelliteTerminal.pdb
+D:\Git_repos\SatelliteTerminal\bin\Debug\SatelliteTerminal.exe.config
+D:\Git_repos\SatelliteTerminal\bin\Debug\SatelliteTerminal.exe
+D:\Git_repos\SatelliteTerminal\bin\Debug\SatelliteTerminal.pdb
+D:\Git_repos\SatelliteTerminal\obj\Debug\SatelliteTerminal.csprojAssemblyReference.cache
+D:\Git_repos\SatelliteTerminal\obj\Debug\SatelliteTerminal.Form1.resources
+D:\Git_repos\SatelliteTerminal\obj\Debug\SatelliteTerminal.Properties.Resources.resources
+D:\Git_repos\SatelliteTerminal\obj\Debug\SatelliteTerminal.csproj.GenerateResource.cache
+D:\Git_repos\SatelliteTerminal\obj\Debug\SatelliteTerminal.csproj.CoreCompileInputs.cache
+D:\Git_repos\SatelliteTerminal\obj\Debug\SatelliteTerminal.exe
+D:\Git_repos\SatelliteTerminal\obj\Debug\SatelliteTerminal.pdb

@@ -12,11 +12,28 @@ namespace SatelliteTerminal
 {
     public partial class Form1 : Form
     {
-        SerialPort port = new SerialPort("COM1", 115200, Parity.None);
+        SerialPort port = null;
 
         public Form1()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            var ports = SerialPort.GetPortNames();
+            int i = 0;
+            while (port == null && i < ports.Length)
+            {
+
+                var s = new SerialPort(ports[i], 115200);
+                if(s.IsOpen)
+                {
+                    i++;
+                }
+                else
+                {
+                    port = s;
+                    port.Open();
+                }
+            }
+
         }
         
         private void label8_Click(object sender, EventArgs e)
@@ -57,26 +74,31 @@ namespace SatelliteTerminal
         private void read_gpgga(SerialPort p, string s)
         {
             int len = 0, i = 0;
-            while (s[i] != '\n' && s[i] != '\r')
+            while (i < s.Length && s[i] != '\n' && s[i] != '\r')
             {
                 if (s.Length - 1 == i && s[i] != '\n' && s[i] != '\r')
-                    s += p.ReadChar();
+                    s += p.ReadExisting();
                 i++;
             }
 
-            while (s[i - len] != '$' && len <= i)
+            while (i - len - 1 > 0 && s[i - len - 1] != '$' && len <= i)
                 len++;
             if (len > i)
                 return;
             string gpgga = s.Substring(i - len, len);
             Console.Write(gpgga);
             string[] tokens = gpgga.Split(',', '*');
+            if (tokens.Length < 16)
+                return;
+            double
+                coord_lat = (Convert.ToDouble(String.Format("{0},{1}", tokens[2].Split('.')))),
+                coord_long = (Convert.ToDouble(String.Format("{0},{1}", tokens[4].Split('.'))));
             string
                 header = tokens[0],
                 utc_str = tokens[1],
-                Latitude = tokens[2],
+                Latitude = String.Format("{0}°{1}'{2}''", Convert.ToInt16(coord_lat/100), Convert.ToInt32(coord_lat  % 100), Convert.ToInt32(coord_lat % 100  * 60) % 60),
                 latDir = tokens[3],
-                Longitude = tokens[4],
+                Longitude = String.Format("{0}°{1}'{2}''", Convert.ToInt16(coord_long / 100), Convert.ToInt32(coord_long % 100) , Convert.ToInt32(coord_long % 100 * 60) % 60),
                 longdir = tokens[5],
                 quality = tokens[6],
                 satcnt = tokens[7],
@@ -113,8 +135,6 @@ namespace SatelliteTerminal
                 port.PortName = listBox1.SelectedItem.ToString();
                 port.ReadTimeout = 2000;
                 port.WriteTimeout = 1000;
-                if (port.IsOpen)
-                    port.Close();
                 port.Open();
                 for (int i = 0; i < tabControl1.TabPages.Count; i++)
                 {
@@ -162,8 +182,9 @@ namespace SatelliteTerminal
             {
                 var s = port.ReadExisting();
                 richTextBox1.Text += s;
+                richTextBox1.Select(richTextBox1.Text.Length, 1);
                 if (s.ToLower().Contains("$gpgga"))
-                    read_gpgga((SerialPort)sender, s);
+                    read_gpgga((SerialPort)sender, s.Split("\n".ToCharArray())[0] );
             });
         }
 
@@ -273,9 +294,9 @@ namespace SatelliteTerminal
                 port.Open();
         }
 
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        private void radioButton5_CheckedChanged(object sender, EventArgs e) // 9600
         {
-            // 9600
+            
             port.BaudRate = 9600;
 
             if (port.IsOpen)
@@ -284,9 +305,9 @@ namespace SatelliteTerminal
                 port.Open();
         }
 
-        private void radioButton13_CheckedChanged(object sender, EventArgs e)
+        private void radioButton13_CheckedChanged(object sender, EventArgs e) // 57600
         {
-            // 57600
+            
             port.BaudRate = 57600;
 
             if (port.IsOpen)
@@ -295,9 +316,9 @@ namespace SatelliteTerminal
                 port.Open();
         }
 
-        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        private void radioButton6_CheckedChanged(object sender, EventArgs e) // 56000
         {
-            // 56000
+            
             port.BaudRate = 56000;
 
             if (port.IsOpen)
@@ -306,9 +327,9 @@ namespace SatelliteTerminal
                 port.Open();
         }
 
-        private void radioButton7_CheckedChanged(object sender, EventArgs e)
+        private void radioButton7_CheckedChanged(object sender, EventArgs e) //115200
         {
-            //115200
+            
             port.BaudRate = 115200;
 
             if (port.IsOpen)
@@ -317,9 +338,9 @@ namespace SatelliteTerminal
                 port.Open();
         }
 
-        private void radioButton8_CheckedChanged(object sender, EventArgs e)
+        private void radioButton8_CheckedChanged(object sender, EventArgs e) //256000
         {
-            //256000
+            
             port.BaudRate = 256000;
 
             if (port.IsOpen)
@@ -328,9 +349,8 @@ namespace SatelliteTerminal
                 port.Open();
         }
 
-        private void radioButton12_CheckedChanged(object sender, EventArgs e)
+        private void radioButton12_CheckedChanged(object sender, EventArgs e) // parity none
         {
-            //n
             port.Parity = Parity.None;
 
             if (port.IsOpen)
@@ -339,9 +359,8 @@ namespace SatelliteTerminal
                 port.Open();
         }
 
-        private void radioButton10_CheckedChanged(object sender, EventArgs e)
+        private void radioButton10_CheckedChanged(object sender, EventArgs e) // parity odd
         {
-            // o
             port.Parity = Parity.Odd;
 
             if (port.IsOpen)
@@ -350,9 +369,8 @@ namespace SatelliteTerminal
                 port.Open();
         }
 
-        private void radioButton9_CheckedChanged(object sender, EventArgs e)
+        private void radioButton9_CheckedChanged(object sender, EventArgs e) // parity space
         {
-            //s
             port.Parity = Parity.Space;
 
             if (port.IsOpen)
@@ -369,15 +387,41 @@ namespace SatelliteTerminal
             }
         }
 
+        string location_filaname = null;
+
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK)
+                return;
+            location_filaname = saveFileDialog1.FileName;
+            toolTip1.ShowAlways = true;
+            toolTip1.ShowAlways = true;
+            toolTip1.SetToolTip(sender as Control, location_filaname);
             port.DataReceived += gpgga_parser;
         }
 
         private void gpgga_parser(object sender, SerialDataReceivedEventArgs e)
         {
+            var f = System.IO.File.Open(location_filaname, System.IO.FileMode.Append);
+            var p = sender as SerialPort;
+            string data_s = p.ReadExisting();
+            byte[] data = new byte[data_s.Length];
+            /*System.Text.Encoding.ASCII.GetString()
+            data.ToArray<char>(data);
+            */f.Write(data, 0, data.Length);
+
             
+        }
+
+        private void label17_TextChanged(object sender, EventArgs e)
+        {
+            this.textBox2.Text = (sender as Label).Text;
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+            this.textBox3.Text = (sender as Label).Text;
+
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -100,11 +101,13 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label29 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.label29 = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -290,6 +293,7 @@
             this.label16.Size = new System.Drawing.Size(31, 13);
             this.label16.TabIndex = 18;
             this.label16.Text = "????";
+            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // label17
             // 
@@ -300,6 +304,7 @@
             this.label17.Size = new System.Drawing.Size(25, 13);
             this.label17.TabIndex = 17;
             this.label17.Text = "???";
+            this.label17.TextChanged += new System.EventHandler(this.label17_TextChanged);
             // 
             // radioButton1
             // 
@@ -476,10 +481,10 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(112, 16);
+            this.button10.Location = new System.Drawing.Point(105, 16);
             this.button10.Margin = new System.Windows.Forms.Padding(2);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(56, 19);
+            this.button10.Size = new System.Drawing.Size(63, 19);
             this.button10.TabIndex = 53;
             this.button10.Text = "Скан";
             this.button10.UseVisualStyleBackColor = true;
@@ -487,20 +492,22 @@
             // 
             // listBox1
             // 
+            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(9, 18);
+            this.listBox1.ItemHeight = 20;
+            this.listBox1.Location = new System.Drawing.Point(5, 18);
             this.listBox1.Margin = new System.Windows.Forms.Padding(2);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(90, 17);
+            this.listBox1.Size = new System.Drawing.Size(90, 24);
             this.listBox1.Sorted = true;
             this.listBox1.TabIndex = 54;
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(112, 38);
+            this.button11.Location = new System.Drawing.Point(105, 38);
             this.button11.Margin = new System.Windows.Forms.Padding(2);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(56, 19);
+            this.button11.Size = new System.Drawing.Size(63, 19);
             this.button11.TabIndex = 55;
             this.button11.Text = "Выбрать";
             this.button11.UseVisualStyleBackColor = true;
@@ -922,6 +929,15 @@
             this.tabPage5.Text = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(304, 7);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(41, 13);
+            this.label29.TabIndex = 31;
+            this.label29.Text = "label29";
+            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.richTextBox1);
@@ -960,15 +976,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(304, 7);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(41, 13);
-            this.label29.TabIndex = 31;
-            this.label29.Text = "label29";
             // 
             // Form1
             // 
@@ -1085,6 +1092,8 @@
         private System.Windows.Forms.RadioButton radioButton10;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
